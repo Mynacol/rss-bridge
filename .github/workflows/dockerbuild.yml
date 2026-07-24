@@ -17,10 +17,6 @@ permissions:
   contents: read
   packages: write
 
-env:
-  DOCKERHUB_SLUG: rssbridge/rss-bridge
-  GHCR_SLUG: ghcr.io/rss-bridge/rss-bridge
-
 jobs:
   bake:
     runs-on: ubuntu-24.04-arm
@@ -30,11 +26,12 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ${{ env.DOCKERHUB_SLUG }}
-            ${{ env.GHCR_SLUG }}
+            ${{ secrets.DOCKER_PASSWORD && 'rssbridge/rss-bridge' || '' }}
+            ghcr.io/${{github.repository_owner}}/${{github.event.repository.name}}
           tags: |
             type=raw,value=latest,enable=${{ github.event_name != 'pull_request' }}
             type=sha
+            type=sha,format=long
             type=ref,event=tag,enable=${{ startsWith(github.ref, 'refs/tags/20') }}
             type=raw,value=stable,enable=${{ startsWith(github.ref, 'refs/tags/20') }}
       - name: Set up QEMU
@@ -43,7 +40,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
       - name: Login to DockerHub
         uses: docker/login-action@v3
-        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ github.repository == 'rss-bridge/rss-bridge' }}
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
