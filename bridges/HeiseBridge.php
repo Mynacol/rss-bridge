@@ -34,10 +34,6 @@ class HeiseBridge extends FeedExpander
                 => 'https://www.heise.de/thema/Open-Source.xml',
                 'heise online Top-News'
                 => 'https://www.heise.de/rss/heise-top-atom.xml',
-                //'iMonitor – Internet-Störungen'
-                //=> 'https://www.heise.de/netze/netzwerk-tools/imonitor-internet-stoerungen/feed/aktuelle-meldungen/',
-                //'heise tipps+tricks 🦄💻📱'
-                //=> 'https://www.heise.de/rss/tipps-und-tricks-atom.xml',
                 'Alle Inhalte von heise+'
                 => 'https://www.heise.de/rss/heiseplus-atom.xml',
                 'heise Autos News'
